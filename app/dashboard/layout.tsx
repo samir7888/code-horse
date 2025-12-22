@@ -1,0 +1,29 @@
+import AppSidebar from '@/components/app-sidebar'
+import { Separator } from '@/components/ui/separator'
+import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+import { requireAuth } from '@/modules/auth/utils/auth-utils'
+import React from 'react'
+
+const DashboardLayout = async({ children }: { children: React.ReactNode }) => {
+    await requireAuth();
+    return (
+        <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
+
+                <header className='flex h-16 items-center gap-2 shrink-0 '>
+                    <SidebarTrigger className='ml-1' />
+                    <Separator orientation='vertical' className='mx-2 h-4' />
+                    <h1 className='font-semibold text-xl text-foreground'>Dashboard</h1>
+
+                </header>
+                <main className='flex-1 overflow-auto p-4 md:p-6'>
+                    {children}
+                </main>
+
+            </SidebarInset>
+        </SidebarProvider>
+    )
+}
+
+export default DashboardLayout
